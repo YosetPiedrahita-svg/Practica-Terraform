@@ -10,9 +10,9 @@ terraform {
 
 # Parámetros Globales de Conexión
 provider "google" {
-  project = "project-81bad290-05ae-4c0f-9f6"
+  project = var.proyecto
   region  = "us-central1"
-  zone    = "us-central1-a"
+  zone    = var.zona
 }
 
 # Creación de la Regla de Cortafuegos
@@ -34,8 +34,9 @@ resource "google_compute_firewall" "permitir_http" {
 # Creación de la máquina virtual
 resource "google_compute_instance" "web" {
   name         = "web-tf-yoset"
-  machine_type = "e2-micro"
+  machine_type = var.tipo_maquina
   tags         = ["servidor-web"]
+  allow_stopping_for_update   = true
 
   # Disco duro y sistema operativo
   boot_disk {
